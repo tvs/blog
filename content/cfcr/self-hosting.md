@@ -44,7 +44,7 @@ suggested a simple recipe:
   Since then, the concept of "self-hosting" has been classified into a spectrum
 described in this graphic:
 
-![Self-Hosted Layers](https://github.com/kubernetes/community/raw/master/contributors/design-proposals/cluster-lifecycle/self-hosted-layers.png)
+![Self-Hosted Layers](/img/self-hosted-layers.png)
 
   In this hierarchy, the Kubernetes components are layered starting from the
 most basic component, the `kubelet` at layer zero, and progressively works its
