@@ -1,0 +1,5 @@
+baseurl = "https://www.example.com"
+title = "Site.title"
+theme = "vec"
+languageCode = "en-us"
+paginate = 15
