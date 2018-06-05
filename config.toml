@@ -1,8 +1,9 @@
-baseURL = "http://example.org/"
+baseurl = "/"
 languageCode = "en-us"
 title = "My New Hugo Site"
 theme = "minimal"
 pluralizelisttitles = false
+relativeurls = true
 
 [params]
   author = "Travis Hall"
