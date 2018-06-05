@@ -1,3 +1,9 @@
+---
+title: "Self-Hosting CFCR"
+date: 2018-06-05
+tags: ["cfcr", "architecture", "self-hosting"]
+draft: false
+---
 # Self-Hosting CFCR
 
 ## What is Self-Hosting?
