@@ -1,51 +1,60 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
     name: blog
   name: blog-pod
 spec:
-  containers:
-  - name: git-sync
-    image: k8s.gcr.io/git-sync:v2.0.4
-    imagePullPolicy: Always
-    volumeMounts:
-    - name: markdown
-      mountPath: /git
-    env:
-    - name: GIT_SYNC_REPO
-      value: https://github.com/tvs/blog.git
-    - name: GIT_SYNC_DEST
-      value: git
-  - name: hugo
-    image: thall/hugo
-    imagePullPolicy: Always
-    volumeMounts:
-    - name: markdown
-      mountPath: /src
-    - name: html
-      mountPath: /dest
-    env:
-    - name: HUGO_WATCH
-      value: "true"
-    - name: HUGO_BASEURL
-      value: "/"
-    - name: HUGO_SRC
-      value: /src/git
-    - name: HUGO_DESTINATION
-      value: /dest
-  - name: nginx
-    image: nginx
-    volumeMounts:
-    - name: html
-      mountPath: /usr/share/nginx/html
-    ports:
-    - containerPort: 80
-  volumes:
-  - name: markdown
-    emptyDir: {}
-  - name: html
-    emptyDir: {}
+  replicas: 1
+  selector:
+    matchLabels:
+      name: blog
+  template:
+    metadata:
+      labels:
+        name: blog
+    spec:
+      containers:
+      - name: git-sync
+        image: k8s.gcr.io/git-sync:v2.0.4
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: markdown
+          mountPath: /git
+        env:
+        - name: GIT_SYNC_REPO
+          value: https://github.com/tvs/blog.git
+        - name: GIT_SYNC_DEST
+          value: git
+      - name: hugo
+        image: thall/hugo
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: markdown
+          mountPath: /src
+        - name: html
+          mountPath: /dest
+        env:
+        - name: HUGO_WATCH
+          value: "true"
+        - name: HUGO_BASEURL
+          value: "/"
+        - name: HUGO_SRC
+          value: /src/git
+        - name: HUGO_DESTINATION
+          value: /dest
+      - name: nginx
+        image: nginx
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
+        ports:
+        - containerPort: 80
+      volumes:
+      - name: markdown
+        emptyDir: {}
+      - name: html
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
