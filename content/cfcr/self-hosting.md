@@ -9,16 +9,16 @@ draft: false
 ## What is Self-Hosting?
 
   "Self-hosting" is a concept that is ubiquitous in many different categories of
-computing. At its core, "self-hosting" is simply the ability for a system to be
+computing. At its core, self-hosting is simply the ability for a system to be
 expressed by itself. One of the most common examples is in the world of
 programming languages where the compiler is often written in the very same
 language that the compiler is written _for_. Another common scenario can be seen
 with kernels where developers use older versions of the kernel to work on newer
 ones. Often times self-hosting requires an initial implementation that can be
-used to get the system into a steady self-hosting capable state - sometimes done
-through cross-compilation - through a technique called bootstrapping. Once
-the initial bootstrapping has been done, the self-hosted system should be
-readily available to begin expressing new versions of itself.
+used to get the system into a steady self-hosting capable state - sometimes
+done by cross-compilation - through a technique called bootstrapping. Once the
+initial bootstrapping has been done, the self-hosted system should be readily
+available to begin expressing new versions of itself.
 
   In the context of Kubernetes, self-hosting means running the entire Kubernetes
 system on the cluster as though it were just another Kubernetes workload. That
@@ -34,24 +34,24 @@ suggested a simple recipe:
   1. Break circular dependencies by converting hard dependencies to soft
      dependencies.
     * Make all state rediscoverable or reconstructable.
-    * Allow pivoting from bootstrap instances to steady state.
     * Accept data from other components and sources, such as local files, that
       can be used at bootstrap time.
+    * Allow pivoting from bootstrap instances to steady state.
     * Restart components such as `kubelet`, which run locally.
   3. Minimize the number of dependencies required for steady-state operation.
   4. Stratify the dependencies that remain via pricipled layering.
 
-  Since then, the concept of "self-hosting" has been classified into a spectrum
+  Since then, the concept of self-hosting has been classified into a spectrum
 described in this graphic:
 
 ![Self-Hosted Layers](/img/self-hosted-layers.png)
 
   In this hierarchy, the Kubernetes components are layered starting from the
 most basic component, the `kubelet` at layer zero, and progressively works its
-way up the component dependency list until it reaches the optional components
-like `kube-dns` and other cluster addons at layer four. In this way, a cluster
-can be referenced by the layers that it self-hosts. A 0-4 self-hosted cluster
-would reference a cluster where `kubelet` is deployed to the various VMs as a
+way up the component chain until it reaches the optional components like
+`kube-dns` and other cluster addons at layer four. In this way, a cluster can
+be referenced by the layers that it self-hosts. A 0-4 self-hosted cluster would
+reference a cluster where `kubelet` is deployed to the various VMs as a
 `DaemonSet`, `etcd` is running as a workload in the cluster, `kube-apiserver`
 runs as a `Pod` and is exposed as a `Service`, and the `kube-scheduler`,
 `kube-controller-manager`, and `kube-proxy` are running as their own respective
@@ -63,7 +63,7 @@ self-hosted clusters as an alpha feature.
 
   It should be noted that self-hosting was never intended to _replace_ or
 _impede_ other methods for installing and configuring Kubernetes. Rather it's
-intended to exist alongside those methods and come with its own advantages and
+intended to exist alongside those methods and offer its own advantages and
 disadvantages. [The official community proposal for a self-hosted control plane](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/cluster-lifecycle/self-hosted-kubernetes.md)
 lists the following advantages:
 
@@ -95,27 +95,28 @@ are traditionally the purview of BOSH, and so the question that follows is
 
 ## What Does Self-Hosting Bring to CFCR?
 
-  CFCR is a strange beast, in that most of what the project aims to do is
-repackage and distribute other software. Software that is fundamentally very
-similar to the mechanism through which it is being deployed (BOSH). From that
-angle, the CFCR development team interacts with it in a manner very similar to
-its customers.  The team often finds itself delving into the logs of components
-like `kube-proxy` or `kube-controller-manager` to figure out why certain
-features are not behaving.  Application developers can often find themselves in
-the same situation, reading through logs on `kube-apiserver` or the `kubelet`
-to figure out why their application fails to deploy, why their networking is
-failing, or why their deployment is not scaling. While CFCR ideally aims to
-minimize the need for developers to concern themselves with those types or
-problems, the reality is that there is only so much that can be done -
+  CFCR is a strange beast. Most of what the project aims to do is repackage and
+distribute other software - software that is fundamentally very similar to the
+mechanism through which it is being deployed (BOSH). In that regard, the CFCR
+development team finds itself needing to do many of the same tasks and
+functions that a customer would. As an example, the team often finds itself
+delving into the logs of components like `kube-proxy` or `kube-controller-manager`
+to figure out why certain features are not behaving. Cluster administrators
+and application developers can often find themselves in the same situation,
+reading through logs on `kube-apiserver` or the `kubelet` to figure out why
+their application fails to deploy, why their networking is failing, or why
+their deployment is not scaling. While CFCR ideally aims to minimize the need
+for operators and application developers to concern themselves with those types
+or problems, the reality is that there is only so much that can be done -
 Kubernetes is a monolith of complexity and the open-endedness of what can be
-deployed through it makes it impossible to prevent all such problems.
+deployed through it makes it impossible to anticipate and solve all problems.
 
   Because of the similarities between the team and customers, the values that
 self-hosting brings to CFCR are hard to place into strict "product" or
 "technical" categories. Many of the technical benefits are also product
 benefits and many of the product benefits can help with paying down technical
 debt, improving product maintenance, and bringing the team closer to a unified
-set of deliverables. With that preface, the benefits are thus:
+set of deliverables. With that out of the way, there are many benefits:
 
   1. *Introspection:* the experience of managing Kubernetes will become
      significantly more unified. Operators will be able to debug their cluster
@@ -161,7 +162,7 @@ set of deliverables. With that preface, the benefits are thus:
      CFCR-based products to supply their own flavors of components.
      Additionally, the operator is no longer tied to `flannel` and can use the
      CNI-recommended Kubernetes manifests to deploy one of their choosing
-     instead of having to wrap it all up in a complicated BOSH release. Further
+     instead of having to wrap it all up in a complicated BOSH release. Further,
      `etcd` can be managed in more sophisticated ways through
      Kubernetes-centric tools like `etcd-operator`, and the
      `cloud-controller-manager` can be realized as a properly configurable
@@ -171,7 +172,7 @@ set of deliverables. With that preface, the benefits are thus:
      experience, expertise, or drive to pursue complex solutions to the problems
      surrounding its management. Fortunately, CoreOS _does_ and has been working
      on tools like `etcd-operator` for managing `etcd` clusters within
-     Kubernetes.  Self-hosting `etcd` would allow us to leverage these tools
+     Kubernetes. Self-hosting `etcd` would allow us to leverage these tools
      instead of providing our own, frankly, bare-bones solutions.
   8. *Backup and Restore is Unified:* there would be no need for multiple backup
      and restore solutions. `etcd` could be treated the same way as any other
@@ -181,17 +182,25 @@ set of deliverables. With that preface, the benefits are thus:
      that solution rather than pursuing necessarily disparate ones with the
      control plane being a BOSH component and the workloads existing within
      Kubernetes.
-  9. *Self-Regulation of API Components:* API components can utilize their own
-     `ServiceAccount` rather than the cludgy users defined in a token file,
-     they can define their own `Roles`, `Secrets`, `ConfigMaps`, or other
-     objects related to their operation, and those can be placed directly within
-     their manifest, keeping everything within close relation to one another.
-     This means there would no longer be confusing circular dependencies between
-     where a job is run and where the `ClusterRole` and `ClusterRoleBindings`
-     are defined. In short, there would be no need for the `kubernetes-roles`
-     job that is so tightly coupled with the proper operation of certain
-     components.
-  10. *Comparable Architecture:* this point is sort of a stretch, but it bears
+  9. *Unified Logging Solutions:* today, advanced logging options are handled
+     disparately for API components and workloads. BOSH handles log rotation
+     for components like `kube-apiserver` and `kubelet` while it's left as an
+     exercise for the operator on workloads. With a self-hosted cluster we can
+     both leverage and expose addons that handle log rotation and backup for
+     _all_ components. Of course, operators that prefer custom solutions would
+     have the flexibility to set that up as well. Products like [fluentd](https://www.fluentd.org/) are
+     already commonly used alongside [Google Stackdriver](https://cloud.google.com/stackdriver/) in the GKE ecosystem.
+  10. *Self-Regulation of API Components:* API components can utilize their own
+      `ServiceAccount` rather than the cludgy users defined in a token file,
+      they can define their own `Roles`, `Secrets`, `ConfigMaps`, or other
+      objects related to their operation, and those can be placed directly within
+      their manifest, keeping everything within close relation to one another.
+      This means there would no longer be confusing circular dependencies between
+      where a job is run and where the `ClusterRole` and `ClusterRoleBindings`
+      are defined. In short, there would be no need for the `kubernetes-roles`
+      job that is so tightly coupled with the proper operation of certain
+      components.
+  11. *Comparable Architecture:* this point is sort of a stretch, but it bears
       mentioning. By modeling the architecture closer to a community standard
       that is being heavily leveraged by other community-provided tooling (e.g.
       Bootkube, [kops](https://github.com/kubernetes/kops), [kubeadm](https://github.com/kubernetes/kubeadm/blob/master/docs/design/design_v1.10.md#optional-and-alpha-in-v19-self-hosting), Tectonic, and
@@ -206,24 +215,14 @@ set of deliverables. With that preface, the benefits are thus:
       divorced from the limitations of BOSH), it becomes much less likely that
       the problems would be seen as a one-off issue with a relatively unknown
       deployment tool.
-  11. *Unified Logging Solutions:* today, advanced logging options are handled
-      disparately for API components and workloads. BOSH handles log rotation
-      for components like `kube-apiserver` and `kubelet` while it's left as an
-      exercise for the operator on workloads. With a self-hosted cluster we can
-      both leverage and expose addons that handle log rotation and backup for
-      _all_ components. Of course, operators that prefer custom solutions would
-      have the flexibility to set that up as well. Products like [fluentd](https://www.fluentd.org/) are
-      already commonly used alongside [Google Stackdriver](https://cloud.google.com/stackdriver/) in the GKE ecosystem.
-
-  Of course, self-hosting is not all sunshine and puppy dogs. While there are
-many benefits, there are significant challenges associated with it too.
 
 ## Challenges in Self-Hosting CFCR
 
   At this point, any sufficiently skeptical person should be asking the age old
-question, "what's the catch?" And of course, they'd be right to do so. There are
-a few challenges that revolve around the process of self-hosting as well as
-problems created _because_ of self-hosting.
+question, "what's the catch?" And of course, they'd be right to do so.
+Self-hosting CFCR is not all sunshine and rainbows. While there _are_ many
+benefits, there are significant challenges that revolve around the process of
+self-hosting as well as problems created _because_ of self-hosting.
 
   1. *Breaking BOSH Contracts:* in the BOSH world, it's expected that the jobs
      are bundled together through the release and it's through the release object
@@ -274,16 +273,16 @@ problems created _because_ of self-hosting.
 
   While I'm not claiming that the list of pros or cons are exhaustive, I do
 believe that they cover the biggest issues for each category. From that
-perspectivel, I do believe that CFCR should aim to become self-hosted in the
+perspective, I do believe that CFCR should aim to become self-hosted in the
 future. Many of the benefits are ones which empower product users, product
 developers, and downstream consumers. The product will become less dogmatic over
 what is and is not possible, it becomes slimmer and thereby easier to maintain,
 and it concentrates itself more around Kubernetes (which is the end product)
 rather than BOSH. From the other end, the complications and drawbacks seem to be
-ones that CFCR already struggles with: _what, exactly, is_ CFCR? And _how_ should
-CFCR be used? While self-hosting may not necessarily _help_ in answering those
-questions, it does little to harm them. At worst, it seems to make the answers
-more pressing and immediate.
+ones that CFCR already struggles with: _what, exactly, is CFCR?_ And
+_how should CFCR be used?_ While self-hosting may not necessarily _help_ in
+answering those questions, it does little to harm them. At worst, it seems to
+make the answers more pressing and immediate.
 
 ## Assorted Interesting Links
 
