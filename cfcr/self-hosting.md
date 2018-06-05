@@ -61,26 +61,26 @@ intended to exist alongside those methods and come with its own advantages and
 disadvantages. [The official community proposal for a self-hosted control plane](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/cluster-lifecycle/self-hosted-kubernetes.md)
 lists the following advantages:
 
-    1. *Small Dependencies:* self-hosted should reduce the number of components
-      required, on host, for a Kubernetes cluster to be deployed to a Kubelet
-      (ideally running in a container). This should greatly simply the perceived
-      complexity of Kubernetes installation.
-    2. *Deployment Consistency:* self-hosted reduces the number of files that are
-      written to disk or managed via configuration management or manual
-      installation via SSH. Our hope is to reduce the number of moving parts
-      relying on the host OS to make deployments consistent in all environments.
-    3. *Introspection:* internal components can be debugged and inspected by
-       users using existing Kubernetes APIs like `kubectl logs`.
-    4. *Cluster Upgrades:* Related to introspection the components of a
-       Kubernetes cluster are now subject to control via Kubernetes APIs.
-       Upgrades of Kubelet's are possible via new daemon sets, API servers can
-       be upgraded using daemon sets and potentially deployments in the future,
-       and flags of add-ons can be changed by updating deployments, etc.
-    5. *Easier Highly-Available Configurations:* Using Kubernetes APIs will make
-       it easier to scale up and monitor an HA environment without complex
-       external tooling. Because of the complexity of these configuration tools
-       that create them without self-hosted often implement significant complex
-       logic.
+>  1. *Small Dependencies:* self-hosted should reduce the number of components
+>    required, on host, for a Kubernetes cluster to be deployed to a Kubelet
+>    (ideally running in a container). This should greatly simply the perceived
+>    complexity of Kubernetes installation.
+>  2. *Deployment Consistency:* self-hosted reduces the number of files that are
+>    written to disk or managed via configuration management or manual
+>    installation via SSH. Our hope is to reduce the number of moving parts
+>    relying on the host OS to make deployments consistent in all environments.
+>  3. *Introspection:* internal components can be debugged and inspected by
+>     users using existing Kubernetes APIs like `kubectl logs`.
+>  4. *Cluster Upgrades:* Related to introspection the components of a
+>     Kubernetes cluster are now subject to control via Kubernetes APIs.
+>     Upgrades of Kubelet's are possible via new daemon sets, API servers can
+>     be upgraded using daemon sets and potentially deployments in the future,
+>     and flags of add-ons can be changed by updating deployments, etc.
+>  5. *Easier Highly-Available Configurations:* Using Kubernetes APIs will make
+>     it easier to scale up and monitor an HA environment without complex
+>     external tooling. Because of the complexity of these configuration tools
+>     that create them without self-hosted often implement significant complex
+>     logic.
 
   Some of these concepts should sound familiar to CFCR-ians:
 *Deployment Consistency*, *Cluster Upgrades* and *Easier Highly-Available Configurations*
