@@ -1,5 +1,7 @@
-baseurl = "https://www.example.com"
-title = "Site.title"
-theme = "vec"
+baseURL = "http://example.org/"
 languageCode = "en-us"
-paginate = 15
+title = "My New Hugo Site"
+theme = "hyde"
+
+[params]
+  layoutReverse = true
