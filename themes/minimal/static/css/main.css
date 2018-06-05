@@ -98,3 +98,8 @@ footer {
 img {
     max-width: 100%;
 }
+
+/*indent paragraphs in the body*/
+div.text-justify p {
+    text-indent: 1em;
+}
