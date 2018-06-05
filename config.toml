@@ -1,21 +1,21 @@
 baseurl = "/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Travis's Notepad"
 theme = "minimal"
 pluralizelisttitles = false
 relativeurls = true
 
 [params]
   author = "Travis Hall"
-  description = "Personal blog theme powered by Hugo"
+  description = "Random thoughts and observations"
   githubUsername = "tvs"
   accent = "grey"
   showBorder = true
   backgroundColor = "white"
   font = "Raleway"
   highlight = true
-  highlightStyle = "solarized-dark"
-  highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift"]
+  highlightStyle = "railscasts"
+  highlightLanguages = ["go", "ruby", "yaml", "erb", "bash"]
 
 [[menu.main]]
     url = "/"
