@@ -28,7 +28,7 @@ relativeurls = true
     weight = 2
 
 [[menu.main]]
-    url = "/Diary/"
+    url = "/notes/"
     name = "Notes"
     weight = 3
 
