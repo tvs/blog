@@ -272,16 +272,16 @@ self-hosting as well as problems created _because_ of self-hosting.
 ## Should CFCR Become Self-Hosted?
 
   While I'm not claiming that the list of pros or cons are exhaustive, I do
-believe that they cover the biggest issues for each category. From that
+think that they cover the biggest issues for each category. From that
 perspective, I do believe that CFCR should aim to become self-hosted in the
 future. Many of the benefits are ones which empower product users, product
-developers, and downstream consumers. The product will become less dogmatic over
-what is and is not possible, it becomes slimmer and thereby easier to maintain,
-and it concentrates itself more around Kubernetes (which is the end product)
-rather than BOSH. From the other end, the complications and drawbacks seem to be
-ones that CFCR already struggles with: _what, exactly, is CFCR?_ And
+developers, and downstream consumers. The product will become less dogmatic
+over what is and is not possible, it becomes slimmer and thereby easier to
+maintain, and it concentrates itself more around Kubernetes (which is the end
+product) rather than BOSH. From the other end, the complications and drawbacks
+seem to be ones that CFCR already struggles with: _what, exactly, is CFCR?_ And
 _how should CFCR be used?_ While self-hosting may not necessarily _help_ in
-answering those questions, it does little to harm them. At worst, it seems to
+answering those questions, it does little to harm them.  At worst, it seems to
 make the answers more pressing and immediate.
 
 ## Assorted Interesting Links
